@@ -9,7 +9,7 @@ export function Main() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSubmit = async () => {
     if (!selectedGenre) return;
-    
+
     setIsLoading(true);
     await postData(selectedGenre);
     setIsLoading(false);
