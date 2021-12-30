@@ -11,6 +11,7 @@
 ### Installing
 * Fork and clone this repository
 * Run `npm install` in your terminal
+* Run `sudo npm install -g nodemon`
 * Run `npm start`
 * Open another one terminal
 * Run there `nodemon ./script/server.js`
