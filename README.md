@@ -12,5 +12,5 @@
 * Fork and clone this repository
 * Run `npm install` in your terminal
 * Run `npm start`
-* open another one terminal
+* Open another one terminal
 * Run there `nodemon ./script/server.js`
