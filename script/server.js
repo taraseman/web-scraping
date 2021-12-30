@@ -14,6 +14,11 @@
   );
   app.use(bodyParser.json());
 
+  app.use(function(err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
+
   const config = {
     appName: "Taras Live Server",
     port: 3001,
@@ -23,10 +28,13 @@
     res.send("OK");
   });
   app.post("/", function (req, res) {
-    filmAppPuppeteer.start(req.body);
 
-    res.send("POST request to the homepage");
-    res.sendStatus(200);
+    res.status(200).send({status: 0, message: "POST request to the homepage"});
+
+    console.log('start filmAppPuppeter script');
+    filmAppPuppeteer.start(req.body);
+    
+    
   });
 
   app.listen(config.port);

@@ -7,29 +7,61 @@ module.exports = {
     });
 
     const pageFilms = await browser.newPage();
-    const urlSortIndex = data.id.split("-")[1];
-    await pageFilms.goto(
-      `https://www.rottentomatoes.com/browse/dvd-streaming-all?minTomato=0&maxTomato=100&services=amazon;hbo_go;itunes;netflix_iw;vudu;amazon_prime;fandango_now&genres=${urlSortIndex}&sortBy=release`,
-      { waitUntill: "networkidle2" }
+    const filmIndex = data.id.split("-")[1];
+    try {
+      console.log("Opening https://www.rottentomatoes.com/top...");
+      await pageFilms.goto(`https://www.rottentomatoes.com/top`, {
+        waitUntill: "networkidle2",
+      });
+    } catch (err) {
+      console.log("The page www.rottentomatoes didn't load");
+    }
+
+    try {
+      await pageFilms.waitForSelector(
+        `#main_container > div.container-masonry > div:nth-child(3) > section > div > ul > li:nth-child(${filmIndex}) > a > div`
+      );
+    } catch (err) {
+      console.log("Can not find necessary genre");
+    }
+
+    await pageFilms.click(
+      `#main_container > div.container-masonry > div:nth-child(3) > section > div > ul > li:nth-child(${filmIndex}) > a > div`
+    );
+    await pageFilms.waitForSelector(
+      "#top_movies_main > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > a"
     );
 
     const title = await pageFilms.evaluate(
       () =>
         document.querySelector(
-          "#content-column > div:nth-child(5) > div.mb-movies > div:nth-child(2) > div.movie_info > a > h3"
-        ).textContent
+          "#top_movies_main > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > a"
+        ).innerText
     );
+    console.log(`Title of '${data.title}' random film: '${title}'`);
 
     const pageEbay = await browser.newPage();
-    await pageEbay.goto("https://www.ebay.com/b/Movies-TV/11232/bn_1857671");
-    await pageEbay.click("#gh-ac");
-    await pageEbay.type("#gh-ac", title);
-    await pageEbay.click("#gh-btn");
-    await pageEbay.waitForSelector(
-      "#srp-river-results > ul > li:nth-child(2) > div > div.s-item__info.clearfix > span > a > span > svg"
-    );
-    await pageEbay.click(
-      "#srp-river-results > ul > li:nth-child(2) > div > div.s-item__info.clearfix > span > a > span > svg"
-    );
+    try {
+      console.log("Opening Ebay...");
+      await pageEbay.goto("https://www.ebay.com/b/Movies-TV/11232/bn_1857671");
+    } catch (err) {
+      console.log("Ebay page didn't load");
+    }
+    try {
+      await pageEbay.click("#gh-ac");
+      console.log("Typing film title...");
+      await pageEbay.type("#gh-ac", title);
+      await pageEbay.click("#gh-btn");
+      console.log("Finding the film...");
+      await pageEbay.waitForSelector(
+        "#srp-river-results > ul > li:nth-child(2) > div > div.s-item__info.clearfix > span > a > span > svg"
+      );
+      await pageEbay.click(
+        "#srp-river-results > ul > li:nth-child(2) > div > div.s-item__info.clearfix > span > a > span > svg"
+      );
+      console.log("login to your Ebay account");
+    } catch (err) {
+      console.log("Something wrong with work on Ebay");
+    }
   },
 };

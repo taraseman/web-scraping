@@ -1,17 +1,35 @@
-import { Box, Flex, Text, Select, Button } from "@chakra-ui/react";
+import React from 'react';
+import { Box, Flex, Text, Select, Button, useToast } from "@chakra-ui/react";
 import { Genre } from "../../types/genre";
 import { useState } from "react";
 import { genres } from "../../constants/constants";
 import { postData } from "../../service/api/post-genre";
 
+
 export function Main() {
+  const toast = useToast();
   const [selectedGenre, setGenre] = useState<Genre | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const onSubmit = async () => {
     if (!selectedGenre) return;
 
     setIsLoading(true);
-    await postData(selectedGenre);
+    try{
+      await postData(selectedGenre)
+      toast({
+        title: `success`,
+        status: 'success',
+        isClosable: true,
+      })
+    }catch(err) {
+      toast({
+        title: `Something went wrong!`,
+        status: 'error',
+        isClosable: true,
+      })
+    }
+    
+
     setIsLoading(false);
   };
   return (
@@ -45,9 +63,9 @@ export function Main() {
             mb="6"
             placeholder="Choose your favorite Genre"
             size="md"
-            onChange={(e) => {
+            onChange={(event:React.ChangeEvent<HTMLSelectElement>):void => {
               setGenre(
-                genres.find((genre) => genre.id === e.target.value) || null
+                genres.find((genre:Genre) => genre.id === event.currentTarget.value) || null
               );
             }}
           >

@@ -3,50 +3,70 @@ import { Genre } from "../types/genre";
 export const genres: Genre[] = [
   {
     id: "genre-1",
-    title: "Action",
+    title: "Action & Adventure Movies",
   },
   {
     id: "genre-2",
-    title: "Animation",
+    title: "Animation Movies",
+  },
+  {
+    id: "genre-3",
+    title: "Art House & International Movies",
   },
   {
     id: "genre-4",
-    title: "Art & Foreign",
+    title: "Classics Movies",
   },
   {
     id: "genre-5",
-    title: "Classics",
+    title: "Comedy Movies",
   },
   {
     id: "genre-6",
-    title: "Comedy",
+    title: "Documentary Movies",
+  },
+  {
+    id: "genre-7",
+    title: "Drama Movies",
   },
   {
     id: "genre-8",
-    title: "Documentary",
+    title: "Horror Movies",
   },
   {
     id: "genre-9",
-    title: "Drama",
+    title: "Kids & Family Movies",
   },
   {
     id: "genre-10",
-    title: "Horror",
+    title: "Musical & Performing Arts Movies",
   },
   {
     id: "genre-11",
-    title: "Kids & Family",
+    title: "Mystery & Suspense Movies",
   },
   {
-    id: "genre-13",
-    title: "Mystery",
+    id: "genre-12",
+    title: "Romance Movies",
   },
   {
-    id: "genre-18",
-    title: "Romance",
+    id:"genre-13",
+    title:"Science Fiction & Fantasy Movies",
   },
   {
     id: "genre-14",
-    title: "Sci-fi & Fantasy",
+    title: "Special Interest Movies",
+  },
+  {
+    id: "genre-15",
+    title: "Sports & Fitness Movies",
+  },
+  {
+    id: "genre-16",
+    title: "Television Movies",
+  },
+  {
+    id: "genre-17",
+    title: "Western Movies",
   },
 ];
